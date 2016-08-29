@@ -13,6 +13,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText nameEditText,surnameEditText,useridEditText,passwdEditText;
     private RadioGroup radioGroup;
     private RadioButton avatar1RadioButton, avatar2RadioButton, avatar3RadioButton, avatar4RadioButton, avatar5RadioButton;
+    private String nameString,surnameString,useridString, passwdString, avatarString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,27 @@ public class SignUpActivity extends AppCompatActivity {
         avatar5RadioButton = (RadioButton) findViewById(R.id.radioButton5);
     }
     public void clickSignupSign(View view) {
+        // Get value from edit text
+        nameString = nameEditText.getText().toString().trim();
+        surnameString = surnameEditText.getText().toString().trim();
+        useridString = useridEditText.getText().toString().trim();
+        passwdString = passwdEditText.getText().toString().trim();
 
+        //check space
+        if (checkSpace()) {
+            MyAlert myAlert = new MyAlert();
+            myAlert.myDialog(this,R.drawable.kon48, "มีช่องว่าง","กรุณากรอกทุกช่อง คะ");
+        }
+
+        //check select avatar
+
+    }
+
+    private boolean checkSpace() {
+        boolean result = false;
+        if (nameString.equals("") || surnameString.equals("") || useridString.equals("") || passwdString.equals("")) {
+            result = true;
+        }
+        return result;
     }
 }
