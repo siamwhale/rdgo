@@ -30,6 +30,14 @@ public class SignUpActivity extends AppCompatActivity {
         avatar3RadioButton = (RadioButton) findViewById(R.id.radioButton3);
         avatar4RadioButton = (RadioButton) findViewById(R.id.radioButton4);
         avatar5RadioButton = (RadioButton) findViewById(R.id.radioButton5);
+
+        // radio controller
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+            }
+        });
     }
     public void clickSignupSign(View view) {
         // Get value from edit text
