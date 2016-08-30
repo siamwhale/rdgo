@@ -1,6 +1,7 @@
 package th.go.rd.manop.rdrun;
 
-import android.provider.MediaStore;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -26,7 +27,7 @@ public class SignUpActivity extends AppCompatActivity {
         passwdEditText = (EditText) findViewById(R.id.editText4);
         radioGroup = (RadioGroup) findViewById(R.id.ragAvatar);
         avatar1RadioButton = (RadioButton) findViewById(R.id.radioButton);
-        avatar1RadioButton = (RadioButton) findViewById(R.id.radioButton2);
+        avatar2RadioButton = (RadioButton) findViewById(R.id.radioButton2);
         avatar3RadioButton = (RadioButton) findViewById(R.id.radioButton3);
         avatar4RadioButton = (RadioButton) findViewById(R.id.radioButton4);
         avatar5RadioButton = (RadioButton) findViewById(R.id.radioButton5);
@@ -35,7 +36,25 @@ public class SignUpActivity extends AppCompatActivity {
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.radioButton:
+                        avatarString = "0";
+                        break;
+                    case R.id.radioButton2:
+                        avatarString = "1";
+                        break;
+                    case R.id.radioButton3:
+                        avatarString = "2";
+                        break;
+                    case R.id.radioButton4:
+                        avatarString = "3";
+                        break;
+                    case R.id.radioButton5:
+                        avatarString = "4";
+                        break;
 
+
+                }
             }
         });
     }
@@ -50,15 +69,71 @@ public class SignUpActivity extends AppCompatActivity {
         if (checkSpace()) {
             MyAlert myAlert = new MyAlert();
             myAlert.myDialog(this,R.drawable.kon48, "มีช่องว่าง","กรุณากรอกทุกช่อง คะ");
+        } else if (checkCoose()) {
+            // true have choose
+            confirmValue();
+        } else {
+            // false not choose
+            MyAlert myAlert = new MyAlert();
+            myAlert.myDialog(this,R.drawable.nobita48,"ยังไม่เลือก Avatar","กรุณาเลือก Avatar ก่อนคะ");
         }
+
 
         //check select avatar
 
     }
 
+    private void confirmValue() {
+        MyConstant myConstant = new MyConstant();
+        int[] avatar = myConstant.getAvatarInts();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setIcon(avatar[Integer.parseInt(avatarString)]);
+        builder.setTitle("โปรดตรวจสอบข้อมูล");
+        builder.setMessage("Name : "+ nameString + "\n" +
+                            "Surname : "+ surnameString + "\n" +
+                            "User :" + useridString + "\n" +
+                            "Password :" + passwdString + "\n");
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                uploadValueToServer();
+                dialog.dismiss();
+            }
+        });
+        builder.show();
+
+    }
+
+    private void uploadValueToServer() {
+
+    }
+
+    private boolean checkCoose() {
+        boolean result = false;
+        if (avatar1RadioButton.isChecked() ||
+                avatar2RadioButton.isChecked() ||
+                avatar3RadioButton.isChecked() ||
+                avatar4RadioButton.isChecked() ||
+                avatar5RadioButton.isChecked()) {
+            result = true;
+        }
+        return result;
+    }
+
     private boolean checkSpace() {
         boolean result = false;
-        if (nameString.equals("") || surnameString.equals("") || useridString.equals("") || passwdString.equals("")) {
+        if (nameString.equals("") ||
+                surnameString.equals("") ||
+                useridString.equals("") ||
+                passwdString.equals("")) {
             result = true;
         }
         return result;
