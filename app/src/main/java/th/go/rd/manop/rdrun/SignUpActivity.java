@@ -81,7 +81,7 @@ public class SignUpActivity extends AppCompatActivity {
         if (checkSpace()) {
             MyAlert myAlert = new MyAlert();
             myAlert.myDialog(this,R.drawable.kon48, "มีช่องว่าง","กรุณากรอกทุกช่อง คะ");
-        } else if (checkCoose()) {
+        } else if (checkChoose()) {
             // true have choose
             confirmValue();
         } else {
@@ -150,7 +150,7 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
-    private boolean checkCoose() {
+    private boolean checkChoose() {
         boolean result = false;
         if (avatar1RadioButton.isChecked() ||
                 avatar2RadioButton.isChecked() ||
