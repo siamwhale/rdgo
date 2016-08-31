@@ -8,9 +8,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.squareup.picasso.Picasso;
+
 public class MainActivity extends AppCompatActivity {
     private ImageView imageView;
     private EditText userEditText, passwordEditText;
+    private String userString, passwordString;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,7 +24,10 @@ public class MainActivity extends AppCompatActivity {
         userEditText = (EditText) findViewById(R.id.editText5);
         passwordEditText = (EditText) findViewById(R.id.editText6);
 
-    } // Main method
+        // Load img from server
+        Picasso.with(this).load("http://swiftcodingthai.com/rd/Image/rd_logo.png")
+                .resize(150, 150).into(imageView);
+    } // Main me
 
     // SignIn click
     public void clickSignInMain(View view) {
