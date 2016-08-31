@@ -2,21 +2,22 @@ package th.go.rd.manop.rdrun;
 
 import android.content.Context;
 import android.content.Intent;
-import android.opengl.ETC1;
 import android.os.AsyncTask;
-import android.os.StrictMode;
-import android.support.annotation.StringDef;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
     private ImageView imageView;
@@ -43,9 +44,10 @@ public class MainActivity extends AppCompatActivity {
     private class SynUser extends AsyncTask<Void, Void, String> {
         // Explicit
         private Context context;
-        private String myUserString, myPasswordString;
+        private String myUserString, myPasswordString, truePasswordString, nameString,surnameString,id;
         //private static final String urlJSON = "http://swiftcodingthai.com/rd/get_user_manop.php";
         private static final String urlJSON = "http://swiftcodingthai.com/rd/get_user_master.php";
+        private boolean status = true;
 
         public SynUser(Context context, String myUserString, String myPasswordString) {
             this.context = context;
@@ -72,6 +74,37 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.d("31AugV2", "JSON == " +s);
+            try {
+                JSONArray jsonArray = new JSONArray(s);
+                for (int i=0;i<jsonArray.length();i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    if (myUserString.equals(jsonObject.getString("User"))) {
+                        status = false;
+                        truePasswordString = jsonObject.getString("Password");
+                        nameString = jsonObject.getString("User");
+                        surnameString = jsonObject.getString("Surname");
+                        id = jsonObject.getString("id");
+                    }
+                }
+
+                if (status) {
+                    // User not found
+                    MyAlert myAlert = new MyAlert();
+                    myAlert.myDialog(context,R.drawable.kon48,"User wrong","ไม่มี "+ myUserString +" ในระบบ" );
+                } else if (myPasswordString.equals(truePasswordString)) {
+                    // Password true
+                    // Toast หน้าจอแสดงผลชั่วคราว แล้วหายเอง
+                    Toast.makeText(context, "Welcome " + nameString + " " + surnameString,
+                            Toast.LENGTH_SHORT).show();
+
+                } else {
+                    // Password false
+                    MyAlert myAlert = new MyAlert();
+                    myAlert.myDialog(context,R.drawable.bird48,"Password wrong","Please try again.");
+                }
+            } catch (Exception e) {
+                Log.d("31AugV3", "e onPost ==" + e.toString());
+            }
 
         }
     } // SynUser class
