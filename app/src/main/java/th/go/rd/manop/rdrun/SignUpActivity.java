@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.support.annotation.StringDef;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -135,7 +136,7 @@ public class SignUpActivity extends AppCompatActivity {
                 .add("Avatar", avatarString)
                 .build();
         Request.Builder builder = new Request.Builder();
-        Request request = builder.url(urlPHP).post(requestBody).build();
+        final Request request = builder.url(urlPHP).post(requestBody).build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
             @Override
@@ -145,6 +146,7 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Response response) throws IOException {
+                Log.d("31AugV1", "Response == " + response);
                 finish();
             }
         });

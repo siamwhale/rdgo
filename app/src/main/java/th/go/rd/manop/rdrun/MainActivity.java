@@ -14,6 +14,10 @@ public class MainActivity extends AppCompatActivity {
 
     } // Main method
 
+    // Signin click
+    public void clickSignInMain(View view) {
+
+    }
     // Get Event from Click button
     public void clickSignUpMain(View view) { // view ctrl+space และจะแสดงในหน้า layout ด้วย ctrl+shift+enter complete code
         startActivity(new Intent(MainActivity.this,SignUpActivity.class));
