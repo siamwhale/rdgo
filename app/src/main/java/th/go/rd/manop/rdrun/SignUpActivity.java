@@ -27,7 +27,8 @@ public class SignUpActivity extends AppCompatActivity {
     private RadioGroup radioGroup;
     private RadioButton avatar1RadioButton, avatar2RadioButton, avatar3RadioButton, avatar4RadioButton, avatar5RadioButton;
     private String nameString,surnameString,useridString, passwdString, avatarString;
-    private static final String urlPHP = "http://swiftcodingthai.com/rd/add_user_manop.php";
+    //private static final String urlPHP = "http://swiftcodingthai.com/rd/add_user_manop.php";
+    private static final String urlPHP = "http://swiftcodingthai.com/rd/add_user_master.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,13 +128,21 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void uploadValueToServer() {
         OkHttpClient okHttpClient = new OkHttpClient();
+//        RequestBody requestBody = new FormEncodingBuilder()
+//                .add("isAdd", "true")
+//                .add("Name", nameString)
+//                .add("Surname", surnameString)
+//                .add("User", useridString)
+//                .add("Passwd", passwdString)
+//                .add("Avatar", avatarString)
+//                .build();
         RequestBody requestBody = new FormEncodingBuilder()
                 .add("isAdd", "true")
                 .add("Name", nameString)
                 .add("Surname", surnameString)
                 .add("User", useridString)
-                .add("Passwd", passwdString)
-                .add("Avatar", avatarString)
+                .add("Password", passwdString)
+                .add("Avata", avatarString)
                 .build();
         Request.Builder builder = new Request.Builder();
         final Request request = builder.url(urlPHP).post(requestBody).build();
