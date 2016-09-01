@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private class SynUser extends AsyncTask<Void, Void, String> {
         // Explicit
         private Context context;
-        private String myUserString, myPasswordString, truePasswordString, nameString,surnameString,id;
+        private String myUserString, myPasswordString, truePasswordString, nameString,surnameString,idString,avatarString;
         //private static final String urlJSON = "http://swiftcodingthai.com/rd/get_user_manop.php";
         private static final String urlJSON = "http://swiftcodingthai.com/rd/get_user_master.php";
         private boolean status = true;
@@ -83,7 +83,8 @@ public class MainActivity extends AppCompatActivity {
                         truePasswordString = jsonObject.getString("Password");
                         nameString = jsonObject.getString("User");
                         surnameString = jsonObject.getString("Surname");
-                        id = jsonObject.getString("id");
+                        idString = jsonObject.getString("id");
+                        avatarString = jsonObject.getString("Avata");
                     }
                 }
 
@@ -95,6 +96,13 @@ public class MainActivity extends AppCompatActivity {
                     // Password true
                     // Toast หน้าจอแสดงผลชั่วคราว แล้วหายเอง
                     Intent intent = new Intent(MainActivity.this, ServiceActivity.class);
+                    // ส่ง Data แนบไปกับ intent
+
+                    intent.putExtra("id", idString);
+                    intent.putExtra("Avata", avatarString);
+                    intent.putExtra("Name", nameString);
+                    intent.putExtra("Surname", surnameString);
+
                     startActivity(intent);
                     Toast.makeText(context, "Welcome " + nameString + " " + surnameString,
                             Toast.LENGTH_SHORT).show();
