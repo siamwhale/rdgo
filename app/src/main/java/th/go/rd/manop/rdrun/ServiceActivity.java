@@ -148,7 +148,7 @@ public class ServiceActivity extends FragmentActivity implements OnMapReadyCallb
     }
 
     private void myLoop() {
-        // To do
+        // To do -
         Log.d("1SepV2","Lat = " + userLatADouble);
         Log.d("1SepV2","Lng = " + userLngADouble);
 
