@@ -153,7 +153,7 @@ public class ServiceActivity extends FragmentActivity implements OnMapReadyCallb
                     @Override
                     public void onMapLongClick(LatLng latLng) {
                         statusABoolean = !statusABoolean;
-                        Log.d("2SepV4", "status = " + statusABoolean);
+                        Log.d("2SepV4", "status = " + statusABoolean); // test
                     }
                 });
 
