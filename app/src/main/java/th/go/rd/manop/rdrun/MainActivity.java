@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.Checkable;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imageView;
     private EditText userEditText, passwordEditText;
     private String userString, passwordString;
+    private CheckBox checkBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.imageView6);
         userEditText = (EditText) findViewById(R.id.editText5);
         passwordEditText = (EditText) findViewById(R.id.editText6);
+        checkBox = (CheckBox) findViewById(R.id.checkBox);
 
         // Load img from server
         Picasso.with(this).load("http://swiftcodingthai.com/rd/Image/rd_logo.png")
@@ -94,6 +98,16 @@ public class MainActivity extends AppCompatActivity {
                     myAlert.myDialog(context,R.drawable.kon48,"User wrong","ไม่มี "+ myUserString +" ในระบบ" );
                 } else if (myPasswordString.equals(truePasswordString)) {
                     // Password true
+                    // ถ้าถูก และสั่งให้จดจำ จะทำการเก็บค่าไว้
+                    if (checkBox.isChecked()) {
+                        Log.d("2SepV5", "checkBox checked");
+                        MyManage myManage = new MyManage(context); // create instance to make db file
+                        // Insert data
+
+
+                    }
+
+
                     // Toast หน้าจอแสดงผลชั่วคราว แล้วหายเอง
                     Intent intent = new Intent(MainActivity.this, ServiceActivity.class);
                     // ส่ง Data แนบไปกับ intent

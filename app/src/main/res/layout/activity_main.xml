@@ -75,5 +75,20 @@
             android:hint="Password"
             android:textColor="@color/text"
             android:textColorHint="@color/text" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Remember"
+                android:id="@+id/checkBox"
+                android:textColor="@color/text"
+                android:textSize="@dimen/h2"
+                android:paddingTop="5dp" />
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

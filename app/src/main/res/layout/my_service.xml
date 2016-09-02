@@ -51,7 +51,8 @@
             android:text="Normal"
             android:id="@+id/button4"
             android:layout_weight="1"
-            android:textSize="@dimen/h3" />
+            android:textSize="@dimen/h3"
+            android:onClick="clickNormal" />
 
         <Button
             android:layout_width="0dp"
@@ -59,7 +60,8 @@
             android:text="Sattellite"
             android:id="@+id/button5"
             android:layout_weight="1"
-            android:textSize="@dimen/h3" />
+            android:textSize="@dimen/h3"
+            android:onClick="clickSatellite" />
 
         <Button
             android:layout_width="0dp"
@@ -67,7 +69,8 @@
             android:text="Terrain"
             android:id="@+id/button6"
             android:layout_weight="1"
-            android:textSize="@dimen/h3" />
+            android:textSize="@dimen/h3"
+            android:onClick="clickTerrain" />
 
         <Button
             android:layout_width="0dp"
@@ -75,7 +78,8 @@
             android:text="Hybrid"
             android:id="@+id/button7"
             android:layout_weight="1"
-            android:textSize="@dimen/h3" />
+            android:textSize="@dimen/h3"
+            android:onClick="clickHybrid" />
     </LinearLayout>
 
     <!--<fragment-->
