@@ -5,6 +5,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -32,20 +33,18 @@ import java.io.IOException;
 public class ServiceActivity extends FragmentActivity implements OnMapReadyCallback {
     // Explicit
     private GoogleMap mMap;
-    private String idString,avatarString,nameString,surnameString;
+    private String idString, avatarString, nameString, surnameString;
     private ImageView imageView;
-    private TextView nameTextView
-    ,surnameTextView;
+    private TextView nameTextView, surnameTextView;
     private int[] avataInts;
 
     private Marker mconnect;
-    private double userLatADouble = 13.806715,userLngADouble=100.574794;
+    private double userLatADouble = 13.806715, userLngADouble = 100.574794;
     private static final LatLng theconnectionLatLng = new LatLng(13.806715, 100.574794);
 
     private LocationManager locationManager;
     private Criteria criteria; // แกน แนวดิ่ง
     private static final String urlPHP = "http://swiftcodingthai.com/rd/edit_location_manop.php";
-
 
 
     @Override
@@ -84,6 +83,39 @@ public class ServiceActivity extends FragmentActivity implements OnMapReadyCallb
         mapFragment.getMapAsync(this);
 
     }
+
+    private class SynAllUser extends AsyncTask<Void, Void, String> {
+        // Explicit
+        private Context context;
+        private GoogleMap googleMap;
+        private static final String urlJSON = "http://swiftcodingthai.com/rd/get_user_master.php";
+
+        public SynAllUser(Context context, GoogleMap googleMap) {
+            this.context = context;
+            this.googleMap = googleMap;
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                OkHttpClient okHttpClient = new OkHttpClient();
+                Request.Builder builder = new Request.Builder();
+                Request request = builder.url(urlJSON).build();
+                Response response = okHttpClient.newCall(request).execute();
+                return response.body().toString();
+            } catch (Exception e) {
+                Log.d("2SepV2","e doInBack = "+ e.toString());
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.d("2SepV2", "JSON =" + s);
+        }
+    }
+
 
 
     // กรณีถ้ามีการปิดแอพให้ปิดโลเคชั่น
@@ -164,8 +196,10 @@ public class ServiceActivity extends FragmentActivity implements OnMapReadyCallb
         // To do -
         Log.d("1SepV2", "Lat = " + userLatADouble);
         Log.d("1SepV2", "Lng = " + userLngADouble);
-
+        // update location
         editLatLngOnServer();
+        // create Marker
+        createMarker();
         // Post delay
         Handler handler = new Handler(); // android.os package
         handler.postDelayed(new Runnable() {
@@ -174,6 +208,11 @@ public class ServiceActivity extends FragmentActivity implements OnMapReadyCallb
                 myLoop();
             }
         }, 1000);
+    }
+
+    private void createMarker() {
+        SynAllUser synAllUser = new SynAllUser(this, mMap);
+        synAllUser.execute();
     }
 
     private void editLatLngOnServer() {
@@ -192,6 +231,7 @@ public class ServiceActivity extends FragmentActivity implements OnMapReadyCallb
             public void onFailure(Request request, IOException e) {
                 Log.d("2SepV1", "e =" + e.toString());
             }
+
             @Override
             public void onResponse(Response response) throws IOException {
                 Log.d("2SepV1", "Result = " + response.body().toString());
